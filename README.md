@@ -12,7 +12,7 @@ INA219_config_t config = {
     .BusVoltageRange = INA_BRANGE_16,
     .ShuntVoltageRange = INA_SRANGE_40,
     .BusADCResolution = INA_BADC1_12bit,
-    .ShuntADCResolution = INA_SRANGE_40
+    .ShuntADCResolution = INA_SADC1_12bit
 }
 
 //configuração do i2c
