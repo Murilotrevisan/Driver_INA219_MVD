@@ -39,7 +39,7 @@ error_t INA219_measure(INA219_t ina, INA219_values_t *medida) {
 			return 1;
 		}
 		//conversao do valor lido para tensão no Shunt
-		medida -> Shunt_Voltage = ((float) raw_s.value); //configurar valores
+		medida -> Shunt_Voltage = ((float) raw_s.value) * INA_Shunt_Multiply; //Configurar valores
 
 		//Bus Voltage
 		//Leitura do valor i2c do registrador Bus
@@ -52,7 +52,7 @@ error_t INA219_measure(INA219_t ina, INA219_values_t *medida) {
 
 		uint16_t Val_Shift = raw_b.value >> 3;
 		//conversão do valor lida para tensão no Bus
-		medida -> Bus_Voltage = ((float) Val_Shift); //configurar valores
+		medida -> Bus_Voltage = ((float) Val_Shift) * INA_Bus_Multiply; //configurar valores
 
 		//Current
 		//Calculo a partir da tensão no Shunt e do valor do resistor do datasheet
