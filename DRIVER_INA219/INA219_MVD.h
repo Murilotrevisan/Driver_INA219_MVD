@@ -74,7 +74,8 @@ error_t INA219_measure(INA219_t ina, INA219_values_t *values);
 
 //confirmar o valor do resistor shunt, depende da calibração.
 #define INA_Resistor_Shunt	(float)(0.100);
-
+#define INA_Bus_Multiply	(float)(0.004);
+#define INA_Shunt_Multiply	(float)(0.01);
 
 
 
