@@ -36,7 +36,7 @@ error_t INA219_measure(INA219_t ina, INA219_values_t *medida) {
 
 
 		//conversao do valor lido para tensão no Shunt
-		medida -> Shunt_Voltage = ((float) raw_s.value) * INA_Shunt_Multiply; //Configurar valores
+		medida -> Shunt_Voltage = ((float) raw_s) * INA_Shunt_Multiply; //Configurar valores
 
 
 		//Bus Voltage
@@ -44,7 +44,7 @@ error_t INA219_measure(INA219_t ina, INA219_values_t *medida) {
 		int16_t raw_b = i2c_read16(ina.device, INA_BUS_VOLT);
 
 
-		int16_t Val_Shift = raw_b.value >> 3;
+		int16_t Val_Shift = raw_b >> 3;
 		//conversão do valor lida para tensão no Bus
 		medida -> Bus_Voltage = ((float) Val_Shift) * INA_Bus_Multiply; //configurar valores
 
