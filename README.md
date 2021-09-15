@@ -40,7 +40,7 @@ MEDIDA:
 
 INA219_measure(ina, &medida);
 printf("Tensão: %f\r\n", medida.Bus_Voltage);
-printf("Corrente: %f\r\n", medida.Shunt.Currrent)
+printf("Corrente: %f\r\n", medida.Shunt_Currrent)
 
 ~~~
 
