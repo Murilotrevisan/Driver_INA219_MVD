@@ -32,32 +32,50 @@ error_t INA219_measure(INA219_t ina, INA219_values_t *medida) {
 
 		//Shunt Voltage
 		//Leitura do valor i2c no registrador do shunt
-		int16_t raw_s = i2c_read16(ina.device, INA_SHUNT_VOLT);
+		result16_t raw_s = i2c_read16(ina.device, INA_SHUNT_VOLT);
+
+		if (raw_s.hasError){
+			return raw_s.hasError;
+		}
+
+		//Complemento de 2 do valor lido do shunt
+		int16_t val_s = raw_s.value;
+
+		//Conversão para tensão
+		float volt_s = ((float) val_s) * INA_SHUNT_MULTIPLY;
 
 
-		//conversao do valor lido para tensão no Shunt
-		medida -> Shunt_Voltage = ((float) raw_s) * INA_Shunt_Multiply; //Configurar valores
+		//
+		medida -> Shunt_Voltage = volt_s;
 
 
 		//Bus Voltage
 		//Leitura do valor i2c do registrador Bus
-		int16_t raw_b = i2c_read16(ina.device, INA_BUS_VOLT);
+		result16_t raw_b = i2c_read16(ina.device, INA_BUS_VOLT);
 
+		if (raw_b.hasError) {
+			return raw_b.hasError
+		}
 
-		int16_t Val_Shift = raw_b >> 3;
-		//conversão do valor lida para tensão no Bus
-		medida -> Bus_Voltage = ((float) Val_Shift) * INA_Bus_Multiply; //configurar valores
+		//complemento de 2 do valor lido do Bus
+		int16_t val_b = raw_b.value;
+
+		//shift dos bits em 3 bits
+		int16_t val_shift = val_b >> 3;
+
+		//Conversão para tensão
+		float volt_b = ((float) val_shift) * INA_BUS_MULTIPLY;
+
+		//
+		medida -> Bus_Voltage = volt_b;
 
 
 		//Current
 		//Calculo a partir da tensão no Shunt e do valor do resistor do datasheet
-		result16_t raw_c = (Shunt_Voltage)/(INA_Resistor_Shunt);
+		float current_s = (volt_s)/(INA_RESISTOR);
 
-		if (raw_c.hasError){
-			return 1;
-		}
-
-		medida -> Current_Shunt = ((float) raw_c.value); //configurar valores
+		//
+		medida -> Shunt_Current = ( current_s );
 
 }
 
