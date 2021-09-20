@@ -11,12 +11,15 @@
 error_t INA219_reset(INA219_t ina) {
 
 		uint16_t config_rst = 0x0000;
-		config |= INA_RST;
+		config_rst |= INA_RST;
 
 		return i2c_write16(ina.device, INA_CONFIG_ADR, config_rst);
 }
 
 error_t INA219_config(INA219_t ina) {
+
+		// result16_t config_raw = i2c_read16(ina.device, INA_CONFIG_ADR);
+		// config_register = config_raw
 
 		uint16_t config_register = 0x0000;
 
@@ -24,6 +27,7 @@ error_t INA219_config(INA219_t ina) {
 		config_register |= ina.config.ShuntVoltageRange;
 		config_register |= ina.config.BusADCResolution;
 		config_register |= ina.config.ShuntADCResolution;
+		config_register |= ina.config.OperationMode;
 
 		return i2c_write16(ina.device, INA_CONFIG_ADR, config_register);
 }
@@ -54,7 +58,7 @@ error_t INA219_measure(INA219_t ina, INA219_values_t *medida) {
 		result16_t raw_b = i2c_read16(ina.device, INA_BUS_VOLT);
 
 		if (raw_b.hasError) {
-			return raw_b.hasError
+			return raw_b.hasError;
 		}
 
 		//complemento de 2 do valor lido do Bus
