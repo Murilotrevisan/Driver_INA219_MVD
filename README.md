@@ -12,14 +12,15 @@ INA219_config_t config = {
     .BusVoltageRange = INA_BRANGE_16,
     .ShuntVoltageRange = INA_SRANGE_40,
     .BusADCResolution = INA_BADC1_12bit,
-    .ShuntADCResolution = INA_SADC1_12bit
+    .ShuntADCResolution = INA_SADC1_12bit,
+    .OperationMode = INA_CONTINUOUS
 }
 
 //configuração do i2c
 //configurar o endereço de acordo com o utilizado no hardware
 i2c_device_t dev = {
     .i2c = &hi2c1,
-    .adress = 0x40 
+    .adress = 0x40
 }
 
 INA219_t ina = {
@@ -40,7 +41,7 @@ MEDIDA:
 
 INA219_measure(ina, &medida);
 printf("Tensão: %f\r\n", medida.Bus_Voltage);
-printf("Corrente: %f\r\n", medida.Shunt_Currrent)
+printf("Corrente: %f\r\n", medida.Shunt_Current)
 
 ~~~
 
